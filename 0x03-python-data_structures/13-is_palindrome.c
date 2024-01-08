@@ -1,51 +1,53 @@
 #include "lists.h"
-typedef struct listint_s
+
+listint_t *reverse_listint(listint_t **head);
+int is_palindrome(listint_t **head);
+
+/**
+ * reverse_listint - Reverses a singly-linked listint_t list.
+ * @head: A pointer to the starting node of the list to reverse.
+ *
+ * Return: A pointer to the head of the reversed list.
+ */
+
+listint_t *reverse_listint(listint_t **head)
 {
-    int n;
-    struct listint_s *next;
-} listint_t;
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+    listint_t *rest = reverse_listint(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return rest;
+}
+
+/**
+ * is_palindrome - Checks if a singly linked list is a palindrome.
+ * @head: A pointer to the head of the linked list.
+ *
+ * Return: If the linked list is not a palindrome - 0.
+ *         If the linked list is a palindrome - 1.
+ */
+
 int is_palindrome(listint_t **head)
 {
-    // If the list is empty, it is considered a palindrome
-    if (*head == NULL)
-    {
+    if (head == NULL || head->next == NULL) {
         return 1;
     }
-    // Find the middle of the list
-    listint_t *slow = *head;
-    listint_t *fast = *head;
-    while (fast != NULL && fast->next != NULL)
-    {
+    // Find the middle node of the list
+    listint_t *slow = head;
+    listint_t *fast = head;
+    while (fast && fast->next) {
         slow = slow->next;
         fast = fast->next->next;
     }
-    // If the list has odd number of elements, skip the middle element
-    if (fast != NULL)
-    {
-        slow = slow->next;
-    }
     // Reverse the second half of the list
-    listint_t *prev = NULL;
-    listint_t *current = slow;
-    while (current != NULL)
-    {
-        listint_t *next = current->next;
-        current->next = prev;
-        prev = current;
-        current = next;
-    }
-    // Compare the first half and the second half of the list
-    listint_t *first = *head;
-    listint_t *second = prev;
-    while (first != NULL && second != NULL)
-    {
-        if (first->n != second->n)
-        {
+    listint_t *reversed_half = reverse_listint(slow);
+    // Compare the first half with the reversed second half
+    while (reversed_half) {
+        if (head->n != reversed_half->n) {
             return 0;
         }
-        first = first->next;
-        second = second->next;
+        head = head->next;
+        reversed_half = reversed_half->next;
     }
-    // If all elements are the same, the list is a palindrome
-    return 1;
-}
