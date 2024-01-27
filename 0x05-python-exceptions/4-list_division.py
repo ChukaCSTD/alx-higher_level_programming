@@ -3,9 +3,9 @@ def list_division(my_list_1, my_list_2, list_length):
     i = 0
     lst = []
     while i < list_length:
-        result = 0
+        claim = 0
         try:
-            result = my_list_1[index] / my_list_2[index]
+            claim = my_list_1[i] / my_list_2[i]
         except ZeroDivisionError:
             print("division by 0")
         except TypeError:
@@ -13,6 +13,6 @@ def list_division(my_list_1, my_list_2, list_length):
         except IndexError:
             print("out of range")
         finally:
-            lst.append(result)
+            lst.append(claim)
             i += 1
     return lst
