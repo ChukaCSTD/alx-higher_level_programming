@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Defines a class named Student."""
 
+
 class Student:
     ''' Represents the initialization of the Student class '''
 
