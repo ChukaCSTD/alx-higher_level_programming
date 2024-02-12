@@ -3,25 +3,20 @@
 
 
 def pascal_triangle(n):
-    '''
-    returns a list of lists of integers representing
-    the Pascal’s triangle of n
-    '''
+    ''' Create a list of list representing pascal triangle '''
 
-    triangle = [[1], [1, 1]]
-    if n <= 0:
-        return []
+    triangle = []
+    if n == 0:
+        return triangle
 
-    if n == 1:
-        return [[1]]
+    triangle.append([1])
 
-    for t in range(3, n + 1):
-        b4 = []
-        afta = triangle[-1]
-        for i in range(len(afta)- 1):
-            sum_ = afta[i] + afta[i + 1]
-            t.append(sum_)
-        t.insert(0, 1)
-        t.append(1)
-        triangle.append(t)
+    for i in range(1, n):
+        before = triangle[-1]
+        after = [1]
+        for i in range(len(before) - 1):
+            after.append(before[i] + before[i + 1])
+        after += [1]
+        triangle.append(after)
+
     return triangle
